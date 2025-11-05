@@ -2,30 +2,39 @@ import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
+const getInitialTheme = () => {
+  // Comprobamos si estamos en el navegador
+  if (typeof window === "undefined") {
+    return true; // Default a dark si no hay window (SSR)
+  }
+
+  const storedTheme = localStorage.getItem("theme");
+
+  // Si no hay nada guardado en localStorage...
+  if (!storedTheme) {
+    localStorage.setItem("theme", "dark"); // 👈 Guardamos 'dark' como default
+    return true;                          // 👈 Devolvemos 'true' (es dark)
+  }
+
+  // Si había algo guardado, devolvemos si era 'dark' o no
+  return storedTheme === "dark";
+};
+
 export const ThemeToggle = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(getInitialTheme);
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    }
-  }, []);
-
-  const toggleTheme = () => {
     if (isDarkMode) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setIsDarkMode(false);
-    } else {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
-      setIsDarkMode(true);
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => !prevMode);
   };
 
   return (
@@ -44,3 +53,5 @@ export const ThemeToggle = () => {
     </button>
   );
 };
+
+
