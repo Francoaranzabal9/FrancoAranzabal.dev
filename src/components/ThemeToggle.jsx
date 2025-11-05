@@ -3,20 +3,18 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const getInitialTheme = () => {
-  // Comprobamos si estamos en el navegador
   if (typeof window === "undefined") {
-    return true; // Default a dark si no hay window (SSR)
+    return true;
   }
 
   const storedTheme = localStorage.getItem("theme");
 
-  // Si no hay nada guardado en localStorage...
+
   if (!storedTheme) {
-    localStorage.setItem("theme", "dark"); // 👈 Guardamos 'dark' como default
-    return true;                          // 👈 Devolvemos 'true' (es dark)
+    localStorage.setItem("theme", "dark");
+    return true;
   }
 
-  // Si había algo guardado, devolvemos si era 'dark' o no
   return storedTheme === "dark";
 };
 
