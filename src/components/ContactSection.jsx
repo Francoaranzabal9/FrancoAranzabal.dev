@@ -14,6 +14,9 @@ import { useState } from "react";
 export const ContactSection = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +30,9 @@ export const ContactSection = () => {
       });
       setIsSubmitting(false);
     }, 1500);
+    setName("");
+    setEmail("");
+    setMessage("");
   };
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
@@ -126,6 +132,8 @@ export const ContactSection = () => {
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-blue-500"
                   placeholder="Juan Franco..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
 
@@ -144,6 +152,8 @@ export const ContactSection = () => {
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-blue-500"
                   placeholder="example@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
@@ -161,6 +171,8 @@ export const ContactSection = () => {
                   required
                   className="w-full px-4 py-3 rounded-md border border-input bg-background focus:outline-hidden foucs:ring-2 focus:ring-blue-500 resize-none"
                   placeholder="Hello, I'd like to talk about..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                 />
               </div>
 
